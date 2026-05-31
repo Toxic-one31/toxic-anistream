@@ -3,24 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SplashScreen.css";
 import logoTitle from "@/src/config/logoTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { Helmet } from 'react-helmet-async';
+import { faMagnifyingGlass, faChevronDown, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { Helmet } from "react-helmet-async";
 import { generateFAQSchema, generateCanonicalUrl, optimizeTitle } from "@/src/utils/seo.utils";
 
 const FAQ_ITEMS = [
   {
-    question: "Is JustAnime safe?",
-    answer: "Yes, JustAnime is completely safe to use. We ensure all content is properly scanned and secured for our users."
+    question: "Is Toxic AniStream safe?",
+    answer:
+      "Yes. Toxic AniStream does not host any files — it streams from trusted third-party providers via the HiAnime API. No sign-up is required and there are no ads in the player.",
   },
   {
-    question: "What makes JustAnime the best site to watch anime free online?",
-    answer: "JustAnime offers high-quality streaming, a vast library of anime, no intrusive ads, and a user-friendly interface - all completely free."
+    question: "What makes Toxic AniStream different?",
+    answer:
+      "Toxic AniStream is part of the ToxicStream platform, built with a liquid-glass UI and powered by the HiAnime API for reliable HD Sub & Dub streams. It features auto-skip intros, auto-next episodes, and works great on mobile, TV, and desktop.",
   },
   {
-    question: "How do I request an anime?",
-    answer: "You can submit anime requests through our contact form or by reaching out to our support team."
-  }
+    question: "Is this part of ToxicStream?",
+    answer:
+      "Yes! Toxic AniStream is the dedicated anime wing of ToxicStream — a free, no-account streaming platform covering Movies, TV Shows, Anime, and K-Drama.",
+  },
 ];
 
 function SplashScreen() {
@@ -31,15 +33,12 @@ function SplashScreen() {
   const handleSearchSubmit = useCallback(() => {
     const trimmedSearch = search.trim();
     if (!trimmedSearch) return;
-    const queryParam = encodeURIComponent(trimmedSearch);
-    navigate(`/search?keyword=${queryParam}`);
+    navigate(`/search?keyword=${encodeURIComponent(trimmedSearch)}`);
   }, [search, navigate]);
 
   const handleKeyDown = useCallback(
     (e) => {
-      if (e.key === "Enter") {
-        handleSearchSubmit();
-      }
+      if (e.key === "Enter") handleSearchSubmit();
     },
     [handleSearchSubmit]
   );
@@ -49,37 +48,52 @@ function SplashScreen() {
   };
 
   const faqSchema = generateFAQSchema(FAQ_ITEMS);
-  const canonicalUrl = generateCanonicalUrl('/');
-  const pageTitle = optimizeTitle('Watch Anime Online Free | English Sub & Dub', false);
+  const canonicalUrl = generateCanonicalUrl("/");
+  const pageTitle = optimizeTitle("Watch Anime Online Free | Sub & Dub HD", false);
 
   return (
     <>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="JustAnime is the best site to watch anime online for free. Stream thousands of English subbed and dubbed anime episodes in HD quality with no ads." />
-        <meta name="keywords" content="justanime, watch anime free, anime online sub dub, free anime streaming, no ads anime, best anime site" />
+        <meta
+          name="description"
+          content="Toxic AniStream — Watch anime free in HD. English Sub & Dub. No sign-up, no ads in player. Powered by HiAnime API. Part of ToxicStream."
+        />
+        <meta
+          name="keywords"
+          content="toxic anistream, watch anime free, anime sub dub hd, toxicstream anime, free anime streaming, hianime"
+        />
         <link rel="canonical" href={canonicalUrl} />
-
         <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content="Watch high-quality anime online for free on JustAnime. No ads, daily updates, and a massive library of subbed and dubbed content." />
+        <meta
+          property="og:description"
+          content="Watch thousands of anime episodes free in HD. Sub & Dub. No ads. Part of ToxicStream."
+        />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="website" />
-
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content="Stream thousands of anime episodes for free in HD quality on JustAnime. The best ad-free experience for anime fans!" />
-
+        <meta
+          name="twitter:description"
+          content="Stream anime free in HD Sub & Dub on Toxic AniStream. Part of the ToxicStream platform."
+        />
         {faqSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(faqSchema)}
-          </script>
+          <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
         )}
       </Helmet>
+
       <div className="splash-container">
         <div className="splash-overlay"></div>
         <div className="content-wrapper">
+
           <div className="logo-container">
             <img src="/logo.png" alt={logoTitle} className="logo" />
+            <div className="brand-badge">
+              Part of{" "}
+              <a href="https://toxicstream.pages.dev" target="_blank" rel="noopener noreferrer">
+                ToxicStream
+              </a>
+            </div>
           </div>
 
           <div className="search-container">
@@ -91,17 +105,13 @@ function SplashScreen() {
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <button
-              className="search-button"
-              onClick={handleSearchSubmit}
-              aria-label="Search"
-            >
+            <button className="search-button" onClick={handleSearchSubmit} aria-label="Search">
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
           </div>
 
           <Link to="/home" className="enter-button">
-            Enter Homepage <FontAwesomeIcon icon={faAngleRight} className="angle-icon" />
+            Browse Anime <FontAwesomeIcon icon={faAngleRight} className="angle-icon" />
           </Link>
 
           <div className="faq-section">
@@ -109,25 +119,21 @@ function SplashScreen() {
             <div className="faq-list">
               {FAQ_ITEMS.map((item, index) => (
                 <div key={index} className="faq-item">
-                  <button
-                    className="faq-question"
-                    onClick={() => toggleFaq(index)}
-                  >
+                  <button className="faq-question" onClick={() => toggleFaq(index)}>
                     <span>{item.question}</span>
                     <FontAwesomeIcon
                       icon={faChevronDown}
-                      className={`faq-toggle ${expandedFaq === index ? 'rotate' : ''}`}
+                      className={`faq-toggle ${expandedFaq === index ? "rotate" : ""}`}
                     />
                   </button>
                   {expandedFaq === index && (
-                    <div className="faq-answer">
-                      {item.answer}
-                    </div>
+                    <div className="faq-answer">{item.answer}</div>
                   )}
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </>
