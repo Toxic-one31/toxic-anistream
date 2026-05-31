@@ -1,3 +1,3 @@
-const logoTitle="Zen!me"
+const logoTitle = "Toxic AniStream";
 
 export default logoTitle;
