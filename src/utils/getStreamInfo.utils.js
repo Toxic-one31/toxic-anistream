@@ -1,10 +1,8 @@
-import axios from "axios";
+import { fetchStream } from "@/src/services/api.service.js";
 
-export default async function getStreamInfo(animeId,episodeId,serverName,type) {
-  const api_url = import.meta.env.VITE_API_URL;
+export default async function getStreamInfo(animeId, episodeId, serverName, type) {
   try {
-    const response = await axios.get(`${api_url}/stream?id=${animeId}?ep=${episodeId}&server=${serverName}&type=${type}`);
-    return response.data.results;
+    return await fetchStream(animeId, episodeId, serverName, type);
   } catch (error) {
     console.error("Error fetching stream info:", error);
     return error;

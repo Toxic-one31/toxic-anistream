@@ -6,7 +6,6 @@ import { faShield } from "@fortawesome/free-solid-svg-icons";
 function DMCA() {
   return (
     <div className="max-w-5xl mx-auto pt-16 pb-5">
-      {/* Content */}
       <div className="space-y-12 text-white/60">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold text-white">DMCA Takedown Request Requirements</h1>
@@ -46,12 +45,12 @@ function DMCA() {
         <div>
           <h2 className="text-xl font-semibold text-white mb-4">Submit Your Request</h2>
           <p className="leading-relaxed text-base">
-            Your DMCA takedown request should be submit here:{' '}
+            Your DMCA takedown request should be submitted here:{' '}
             <a
               href="/contact"
               className="text-white hover:text-white/80 underline underline-offset-4 decoration-white/20 hover:decoration-white/40 transition-colors"
             >
-              https://justanime.fun/contact
+              https://toxic-anistream.vercel.app/contact
             </a>
           </p>
           <p className="mt-3 leading-relaxed text-base">
@@ -63,4 +62,4 @@ function DMCA() {
   );
 }
 
-export default DMCA; 
+export default DMCA;

@@ -1,14 +1,10 @@
-import axios from "axios";
+import { fetchServers } from "@/src/services/api.service.js";
 
 export default async function getServers(animeId, episodeId) {
   try {
-    const api_url = import.meta.env.VITE_API_URL;
-    const response = await axios.get(
-      `${api_url}/servers/${animeId}?ep=${episodeId}`
-    );
-    return response.data.results;
+    return await fetchServers(animeId, episodeId);
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching servers:", error);
     return error;
   }
 }

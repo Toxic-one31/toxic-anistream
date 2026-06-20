@@ -1,14 +1,10 @@
-import axios from "axios";
+import { fetchSearchSuggestions } from "@/src/services/api.service.js";
 
 const getSearchSuggestion = async (keyword) => {
-  const api_url = import.meta.env.VITE_API_URL;
   try {
-    const response = await axios.get(
-      `${api_url}/search/suggest?keyword=${keyword}`
-    );
-    return response.data.results;
+    return await fetchSearchSuggestions(keyword);
   } catch (err) {
-    console.error("Error fetching genre info:", err);
+    console.error("Error fetching suggestions:", err);
     return err;
   }
 };

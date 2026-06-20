@@ -7,14 +7,11 @@ const DiscordPopup = () => {
     const [shouldRender, setShouldRender] = useState(false);
 
     useEffect(() => {
-        // Check if the user has opted out of seeing the popup
         const isHidden = localStorage.getItem("hideDiscordPopup");
         if (isHidden) return;
 
-        // Set a timer for 2 minutes (120,000 ms)
         const timer = setTimeout(() => {
             setShouldRender(true);
-            // Brief delay to trigger entrance animation
             setTimeout(() => setIsVisible(true), 10);
         }, 60000);
 
@@ -23,7 +20,6 @@ const DiscordPopup = () => {
 
     const handleClose = () => {
         setIsVisible(false);
-        // Wait for animation to finish before removing from DOM
         setTimeout(() => setShouldRender(false), 300);
     };
 
@@ -70,7 +66,7 @@ const DiscordPopup = () => {
 
                     <div className="mt-6 flex flex-col gap-3">
                         <a
-                            href="https://discord.gg/P3yqksmGun"
+                            href="https://discord.gg/toxicstream"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 w-full bg-[#5865F2] hover:bg-[#4759d8] text-white py-2.5 px-4 rounded-xl font-bold transition-all transform active:scale-[0.97] shadow-lg"
@@ -80,7 +76,7 @@ const DiscordPopup = () => {
                         </a>
 
                         <a
-                            href="https://tinyurl.com/JustAnimeZone"
+                            href="https://t.me/toxicstream"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 w-full bg-[#26A5E4] hover:bg-[#2295ce] text-white py-2.5 px-4 rounded-xl font-bold transition-all transform active:scale-[0.97] shadow-lg"

@@ -1,5 +1,7 @@
 import website_name from "@/src/config/website";
 
+const BASE_URL = "https://toxic-anistream.vercel.app";
+
 export const generateDescription = (text, maxLength = 155) => {
   if (!text) return `Watch anime online free on ${website_name}. Stream English subbed and dubbed anime with no ads.`;
 
@@ -44,18 +46,17 @@ export const generateKeywords = (animeInfo) => {
 };
 
 export const generateCanonicalUrl = (path) => {
-  const baseUrl = 'https://justanime.fun';
-  if (!path) return baseUrl;
+  if (!path) return BASE_URL;
 
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${baseUrl}${cleanPath}`;
+  return `${BASE_URL}${cleanPath}`;
 };
 
 export const generateOGImage = (imageUrl, fallbackUrl = 'https://i.postimg.cc/kMYmHkPm/home.webp') => {
   if (!imageUrl) return fallbackUrl;
 
   if (imageUrl.startsWith('/')) {
-    return `https://justanime.fun${imageUrl}`;
+    return `${BASE_URL}${imageUrl}`;
   }
 
   return imageUrl;
@@ -121,14 +122,14 @@ export const generateWebsiteStructuredData = () => {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": website_name,
-    "alternateName": ["justanime.fun", "Just Anime"],
-    "url": "https://justanime.fun",
-    "description": `${website_name} is a free anime streaming website where you can watch English Subbed and Dubbed Anime online.`,
+    "alternateName": ["ToxicAniStream", "Toxic Ani Stream"],
+    "url": BASE_URL,
+    "description": `${website_name} is a free anime streaming platform where you can watch English Subbed and Dubbed anime online. Part of ToxicStream.`,
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://justanime.fun/search?keyword={search_term_string}"
+        "urlTemplate": `${BASE_URL}/search?keyword={search_term_string}`
       },
       "query-input": "required name=search_term_string"
     }
@@ -159,14 +160,18 @@ export const generateOrganizationStructuredData = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": website_name,
-    "url": "https://justanime.fun",
-    "logo": "https://justanime.fun/logo.png",
+    "url": BASE_URL,
+    "logo": `${BASE_URL}/logo.png`,
     "sameAs": [
+      "https://toxicstream.pages.dev",
+      "https://github.com/Toxic-one31/toxic-anistream",
+      "https://t.me/toxicstream",
+      "https://discord.gg/toxicstream"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "justanimexyz@gmail.com",
-      "contactType": "customer service"
+      "contactType": "customer service",
+      "url": `${BASE_URL}/contact`
     }
   };
 };
@@ -179,15 +184,12 @@ export const generateAlternateLinks = (currentPath, languages = ['en', 'ja']) =>
   }));
 };
 
-// Clean and optimize title for SEO
 export const optimizeTitle = (title, suffix = true) => {
   if (!title) return website_name;
 
-  // Remove special characters that might cause issues
   const cleanTitle = title.replace(/[^\w\s\-:,.!?']/g, '').trim();
 
   if (suffix) {
-    // Keep title under 60 characters total
     const suffixText = ` - ${website_name}`;
     const maxTitleLength = 60 - suffixText.length;
 
@@ -201,7 +203,6 @@ export const optimizeTitle = (title, suffix = true) => {
   return cleanTitle.length > 60 ? cleanTitle.substring(0, 57) + '...' : cleanTitle;
 };
 
-// Profile-specific SEO functions
 export const generateProfileTitle = (user, isLoggedIn = false) => {
   if (!isLoggedIn) {
     return optimizeTitle('Login to Your Profile | AniList Integration', false);
@@ -330,7 +331,6 @@ export const generateProfileBreadcrumbs = (user, isLoggedIn = false) => {
   return generateBreadcrumbStructuredData(breadcrumbs);
 };
 
-// Category/Collection page SEO functions
 export const generateCategoryMeta = (categoryName, page = 1, description = null) => {
   const displayName = categoryName.split('-').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1)
@@ -446,7 +446,6 @@ export const generateFAQSchema = (faqs) => {
 export const generateAggregateRating = (score, ratingCount = null) => {
   if (!score) return null;
 
-  // Parse score (could be "8.5/10" or just "8.5")
   const numericScore = parseFloat(score.toString().split('/')[0]);
 
   if (isNaN(numericScore)) return null;
@@ -470,7 +469,6 @@ export const generateOfferSchema = (price = 0) => {
   };
 };
 
-// A-Z List specific SEO
 export const generateAZListMeta = (letter, page = 1) => {
   const displayLetter = letter === 'az-list' ? 'All' :
     letter === 'other' ? '#' :
@@ -486,7 +484,6 @@ export const generateAZListMeta = (letter, page = 1) => {
   return { title, description, keywords };
 };
 
-// Search page SEO
 export const generateSearchMeta = (query) => {
   const title = query
     ? optimizeTitle(`Search: ${query}`)
@@ -503,7 +500,6 @@ export const generateSearchMeta = (query) => {
   return { title, description, keywords };
 };
 
-// Music page dynamic SEO
 export const generateMusicMeta = (animeName = null, themes = []) => {
   if (animeName) {
     const title = optimizeTitle(`${animeName} - Anime Music & Themes`);

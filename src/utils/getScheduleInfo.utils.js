@@ -1,12 +1,10 @@
-import axios from "axios";
+import { fetchSchedule } from "@/src/services/api.service.js";
 
 export default async function getSchedInfo(date) {
   try {
-    const api_url = import.meta.env.VITE_API_URL;
-    const response = await axios.get(`${api_url}/schedule?date=${date}`);
-    return response.data.results;
+    return await fetchSchedule(date);
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching schedule:", error);
     return error;
   }
 }

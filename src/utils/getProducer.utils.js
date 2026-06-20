@@ -1,12 +1,10 @@
-import axios from "axios";
+import { fetchProducer } from "@/src/services/api.service.js";
 
 const getProducer = async (producer, page) => {
-  const api_url = import.meta.env.VITE_API_URL;
   try {
-    const response = await axios.get(`${api_url}/producer/${producer}?page=${page}`);
-    return response.data.results;
+    return await fetchProducer(producer, page);
   } catch (err) {
-    console.error("Error fetching genre info:", err);
+    console.error("Error fetching producer:", err);
     return err;
   }
 };

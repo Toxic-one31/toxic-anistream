@@ -1,15 +1,10 @@
-import axios from "axios";
+import { fetchSearch } from "@/src/services/api.service.js";
 
-const getSearch = async (keyword, page) => {
-  const api_url = import.meta.env.VITE_API_URL;
-  if (!page) page = 1;
+const getSearch = async (keyword, page = 1) => {
   try {
-    const response = await axios.get(
-      `${api_url}/search?keyword=${keyword}&page=${page}`
-    );
-    return response.data.results;
+    return await fetchSearch(keyword, page);
   } catch (err) {
-    console.error("Error fetching genre info:", err);
+    console.error("Error fetching search:", err);
     return err;
   }
 };

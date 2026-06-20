@@ -14,7 +14,7 @@ function Contact() {
         </p>
         <div className="flex flex-wrap gap-6">
           <a
-            href="https://t.me/JustAnimeZone"
+            href="https://t.me/toxicstream"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors group"
@@ -23,7 +23,7 @@ function Contact() {
             <span className="text-white/60 group-hover:text-white">Join our Telegram</span>
           </a>
           <a
-            href="https://discord.gg/P3yqksmGun"
+            href="https://discord.gg/toxicstream"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors group"
@@ -32,7 +32,7 @@ function Contact() {
             <span className="text-white/60 group-hover:text-white">Join Discord Server</span>
           </a>
           <a
-            href="https://github.com/JustAnimeCore/JustAnime"
+            href="https://github.com/Toxic-one31/toxic-anistream"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors group"
@@ -46,4 +46,4 @@ function Contact() {
   );
 }
 
-export default Contact; 
+export default Contact;

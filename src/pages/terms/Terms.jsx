@@ -2,9 +2,10 @@ import React from 'react';
 import website_name from '@/src/config/website.js';
 
 function Terms() {
+  const siteUrl = 'https://toxic-anistream.vercel.app';
+
   return (
     <div className="max-w-5xl mx-auto pt-16 pb-5">
-      {/* Content */}
       <div className="space-y-12 text-white/60">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold text-white">Terms and Conditions of Use</h1>
@@ -13,7 +14,7 @@ function Terms() {
         <div>
           <h2 className="text-xl font-semibold text-white mb-4">1. Terms</h2>
           <p className="leading-relaxed text-base">
-            By accessing this Website, accessible from https://justanime.fun, you are agreeing to be bound by these Website Terms and Conditions of Use and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from accessing this site. The materials contained in this Website are protected by copyright and trade mark law.
+            By accessing this Website, accessible from {siteUrl}, you are agreeing to be bound by these Website Terms and Conditions of Use and agree that you are responsible for the agreement with any applicable local laws. If you disagree with any of these terms, you are prohibited from accessing this site. The materials contained in this Website are protected by copyright and trade mark law.
           </p>
         </div>
 
@@ -79,7 +80,7 @@ function Terms() {
         <div>
           <h2 className="text-xl font-semibold text-white mb-4">9. Governing Law</h2>
           <p className="leading-relaxed text-base">
-            Any claim related to {website_name}'s Website shall be governed by the laws of bq without regards to its conflict of law provisions.
+            Any claim related to {website_name}'s Website shall be governed by the applicable laws without regards to its conflict of law provisions.
           </p>
         </div>
       </div>
@@ -87,4 +88,4 @@ function Terms() {
   );
 }
 
-export default Terms; 
+export default Terms;

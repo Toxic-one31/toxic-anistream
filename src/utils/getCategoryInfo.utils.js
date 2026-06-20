@@ -1,12 +1,10 @@
-import axios from "axios";
+import { fetchCategory } from "@/src/services/api.service.js";
 
-const getCategoryInfo = async (path,page) => {
-  const api_url = import.meta.env.VITE_API_URL;
+const getCategoryInfo = async (path, page) => {
   try {
-    const response = await axios.get(`${api_url}/${path}?page=${page}`);
-    return response.data.results;
+    return await fetchCategory(path, page);
   } catch (err) {
-    console.error("Error fetching genre info:", err);
+    console.error("Error fetching category:", err);
     return err;
   }
 };
