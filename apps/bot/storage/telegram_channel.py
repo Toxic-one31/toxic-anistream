@@ -1,13 +1,10 @@
-"""Persistent key/value storage backed by a private Telegram channel.
-
-The bot must be an administrator in STORAGE_CHANNEL_ID. Records are append-only
-and use a small, versioned text format so they can be inspected manually.
-"""
+"""Persistent key/value storage backed by a private Telegram channel."""
 
 from __future__ import annotations
 
 import json
 import logging
+from datetime import datetime, timezone
 from typing import Any
 
 from pyrogram import Client
@@ -38,10 +35,26 @@ class TelegramChannelStore:
         logger.info("Loaded %d persistent values from Telegram channel", len(self.values))
 
     async def set(self, key: str, value: Any) -> None:
-        """Append a new value record to the private storage channel."""
+        """Append a new value record to the private Telegram channel."""
         payload = {"key": key, "value": value}
-        await self.client.send_message(self.channel_id, PREFIX + json.dumps(payload, separators=(",", ":")))
+        await self.client.send_message(
+            self.channel_id,
+            PREFIX + json.dumps(payload, separators=(",", ":")),
+        )
         self.values[key] = value
+
+    async def record(self, kind: str, user_id: int, data: dict[str, Any]) -> str:
+        """Persist an append-only event and return its storage key."""
+        timestamp = datetime.now(timezone.utc).isoformat()
+        key = f"event:{kind}:{user_id}:{timestamp}"
+        payload = {
+            "kind": kind,
+            "user_id": user_id,
+            "timestamp": timestamp,
+            "data": data,
+        }
+        await self.set(key, payload)
+        return key
 
     def get(self, key: str, default: Any = None) -> Any:
         return self.values.get(key, default)
