@@ -10,7 +10,10 @@ from dotenv import load_dotenv
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from features.search import register_search_handlers
 from pipeline.quality import QUALITY_OPTIONS, get_quality
+from providers.animepahe import AnimePaheProvider
+from providers.registry import ProviderRegistry
 from storage.telegram_channel import TelegramChannelStore
 
 load_dotenv()
@@ -38,6 +41,7 @@ app = Client(
     workdir=str(DATA_DIR),
 )
 store = TelegramChannelStore(app, STORAGE_CHANNEL_ID)
+provider_registry = ProviderRegistry([AnimePaheProvider()])
 
 
 def preference_key(user_id: int) -> str:
@@ -195,21 +199,6 @@ async def downloads_command(_, message):
     )
 
 
-@app.on_message(filters.command("anime"))
-async def anime_command(_, message):
-    parts = (message.text or "").split(maxsplit=1)
-    if len(parts) < 2 or not parts[1].strip():
-        await message.reply_text("☠️ Try: `/anime One Piece`", reply_markup=menu())
-        return
-    query = parts[1].strip()
-    await message.reply_text(
-        f"🔎 **TOXIC SEARCH**\n\nQuery: `{query}`\n\n"
-        "🟡 Provider search integration is next.\n"
-        "Use `/quality` to prepare your preferred quality.",
-        reply_markup=quality_menu(),
-    )
-
-
 @app.on_callback_query()
 async def callback_handler(_, callback_query):
     data = callback_query.data or ""
@@ -262,7 +251,10 @@ async def main() -> None:
     try:
         await app.start()
         await store.load()
-        logger.info("☠️ Toxic Anime Bot started with persistent Telegram storage")
+        register_search_handlers(app, provider_registry, store)
+        logger.info(
+            "☠️ Toxic Anime Bot started with persistent Telegram storage and provider search"
+        )
         await asyncio.Event().wait()
     finally:
         await app.stop()
